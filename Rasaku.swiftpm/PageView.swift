@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct PageView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+  @ObservedObject var pageData: PageData
+  let currPage: Page
+
+  var body: some View {
+    if currPage.isFood {
+      AnswerView(pageData: pageData, food: pageData.foods[currPage.foodId ?? 0])
+    } else {
+      QuestionView(pageData: pageData, page: currPage)
     }
+  }
 }
 
 struct PageView_Previews: PreviewProvider {
-    static var previews: some View {
-        PageView()
-    }
+  static var previews: some View {
+    PageView(pageData: PageData(), currPage: pages[0])
+  }
 }

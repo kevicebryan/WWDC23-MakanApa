@@ -16,7 +16,6 @@ extension View {
 struct RoundedCorner: Shape {
   var radius: CGFloat = .infinity
   var corners: UIRectCorner = .allCorners
-
   func path(in rect: CGRect) -> Path {
     let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
     return Path(path.cgPath)
@@ -24,26 +23,27 @@ struct RoundedCorner: Shape {
 }
 
 struct AnswerView: View {
-  @Binding var food: Food
+  @ObservedObject var pageData: PageData
+  let food: Food
 
   var body: some View {
     ZStack {
       Color("darkOrange").ignoresSafeArea()
-      Image("egg").ignoresSafeArea().scaleEffect(1.1).padding(.top, 120)
+      Image("egg").ignoresSafeArea().scaleEffect(0.9).padding(.top, 160)
       VStack {
-        Text("I would recommend you to try").font(.system(size: 40, weight: .heavy)).padding(.top, 80)
+        Text("I would recommend you to try").font(.system(size: 40, weight: .heavy)).padding(.top, 150).foregroundColor(.black)
         Text(food.name)
           .overlay {
             LinearGradient(colors: [food.colors[0], food.colors[1]], startPoint: .topLeading, endPoint: .bottomTrailing).mask(Text(food.name))
-          }.font(.system(size: 125, weight: .heavy))
+          }.font(.system(size: 125, weight: .heavy)).padding(.top, -48)
 
         ScrollView(showsIndicators: false) {
-          food.img.resizable().frame(width: 500, height: 500).background(.white).clipShape(Circle()).shadow(radius: 10).padding(.bottom, 40).padding(.top, 20)
+          food.img.resizable().frame(width: 500, height: 500).background(.white).clipShape(Circle()).shadow(radius: 10).padding(.bottom, 60).padding(.top, 20)
 
           VStack(alignment: .leading) {
-            Text("What is \(food.name)?").font(.system(size: 50, weight: .bold)).padding(.bottom, 12)
-            Text(food.description).font(.system(size: 28, weight: .regular)).padding(.bottom, 32)
-            Text("3 Emojis that describes this dish").font(.system(size: 28, weight: .semibold))
+            Text("What is \(food.name)?").font(.system(size: 40, weight: .bold)).padding(.bottom, 12)
+            Text(food.description).font(.system(size: 24, weight: .regular)).padding(.bottom, 32)
+            Text("3 Emojis that describes this dish").font(.system(size: 24, weight: .semibold))
             HStack {
               ForEach(food.emojis, id: \.self) { emoji in
                 Text(emoji).font(.system(size: 120))
@@ -53,9 +53,18 @@ struct AnswerView: View {
               }
             }.padding(.horizontal, 10).padding(.top, 12)
             Spacer()
-          }.padding(60).frame(maxWidth: 700, minHeight: 500, maxHeight: 900).background(LinearGradient(colors: [food.colors[0], food.colors[1]], startPoint: .topLeading, endPoint: .bottomTrailing)).cornerRadius(32).foregroundColor(.white).padding(.bottom, 32)
+          }.padding(40).frame(maxWidth: 640, minHeight: 500, maxHeight: 880).background(LinearGradient(colors: [food.colors[0], food.colors[1]], startPoint: .topLeading, endPoint: .bottomTrailing))
+            .cornerRadius(32).foregroundColor(.white).zIndex(10)
 
-        }.cornerRadius(1000, corners: [.topLeft, .topRight]).cornerRadius(12, corners: [.bottomLeft, .bottomRight]).edgesIgnoringSafeArea(.bottom)
+          NavigationLink(destination: ExploreView()) {
+            HStack(alignment: .center) {
+              Text("Explore more")
+                .fontWeight(.semibold)
+                .multilineTextAlignment(.center).frame(width: 200).padding(.top, 16).padding(.bottom, -16).font(.title3)
+            }.foregroundColor(.white).font(.largeTitle).padding(.bottom, 32).background(.black).cornerRadius(80).padding(.top, 20).padding(.bottom, 60)
+          }
+
+        }.cornerRadius(180, corners: [.topLeft, .topRight]).cornerRadius(12, corners: [.bottomLeft, .bottomRight]).edgesIgnoringSafeArea(.bottom)
       }
     }
   }
@@ -63,6 +72,6 @@ struct AnswerView: View {
 
 struct AnswerView_Previews: PreviewProvider {
   static var previews: some View {
-    AnswerView(food: .constant(foods[0]))
+    AnswerView(pageData: PageData(), food: foods[0])
   }
 }
