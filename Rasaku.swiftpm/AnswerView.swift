@@ -7,24 +7,11 @@
 
 import SwiftUI
 
-extension View {
-  func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-    clipShape(RoundedCorner(radius: radius, corners: corners))
-  }
-}
-
-struct RoundedCorner: Shape {
-  var radius: CGFloat = .infinity
-  var corners: UIRectCorner = .allCorners
-  func path(in rect: CGRect) -> Path {
-    let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-    return Path(path.cgPath)
-  }
-}
-
 struct AnswerView: View {
   @ObservedObject var pageData: PageData
   let food: Food
+  @State var animationScale = 0.5
+  @State var animationDegree = -420
 
   var body: some View {
     ZStack {
@@ -32,13 +19,17 @@ struct AnswerView: View {
       Image("egg").ignoresSafeArea().scaleEffect(0.9).padding(.top, 160)
       VStack {
         Text("I would recommend you to try").font(.system(size: 40, weight: .heavy)).padding(.top, 150).foregroundColor(.black)
+
         Text(food.name)
           .overlay {
             LinearGradient(colors: [food.colors[0], food.colors[1]], startPoint: .topLeading, endPoint: .bottomTrailing).mask(Text(food.name))
-          }.font(.system(size: 125, weight: .heavy)).padding(.top, -48)
+          }.font(.system(size: 125, weight: .heavy)).padding(.top, -48).padding(.bottom, 32)
 
         ScrollView(showsIndicators: false) {
-          food.img.resizable().frame(width: 500, height: 500).background(.white).clipShape(Circle()).shadow(radius: 10).padding(.bottom, 60).padding(.top, 20)
+          food.img.resizable().frame(width: 500, height: 500).padding(.bottom, 40).padding(.top, 10).onAppear {
+            animationScale = 1.15
+            animationDegree = 0
+          }.scaleEffect(animationScale).rotationEffect(.degrees(Double(animationDegree))).animation(.easeInOut(duration: 0.8))
 
           VStack(alignment: .leading) {
             Text("What is \(food.name)?").font(.system(size: 40, weight: .bold)).padding(.bottom, 12)
@@ -54,17 +45,17 @@ struct AnswerView: View {
             }.padding(.horizontal, 10).padding(.top, 12)
             Spacer()
           }.padding(40).frame(maxWidth: 640, minHeight: 500, maxHeight: 880).background(LinearGradient(colors: [food.colors[0], food.colors[1]], startPoint: .topLeading, endPoint: .bottomTrailing))
-            .cornerRadius(32).foregroundColor(.white).zIndex(10)
+            .cornerRadius(32).foregroundColor(.white)
 
-          NavigationLink(destination: ExploreView()) {
+          NavigationLink(destination: ExploreView(pageData: pageData)) {
             HStack(alignment: .center) {
               Text("Explore more")
                 .fontWeight(.semibold)
                 .multilineTextAlignment(.center).frame(width: 200).padding(.top, 16).padding(.bottom, -16).font(.title3)
-            }.foregroundColor(.white).font(.largeTitle).padding(.bottom, 32).background(.black).cornerRadius(80).padding(.top, 20).padding(.bottom, 60)
+            }.foregroundColor(.white).font(.largeTitle).padding(.bottom, 32).background(Color("darkGray")).cornerRadius(80).padding(.top, 20).padding(.bottom, 60)
           }
 
-        }.cornerRadius(180, corners: [.topLeft, .topRight]).cornerRadius(12, corners: [.bottomLeft, .bottomRight]).edgesIgnoringSafeArea(.bottom)
+        }.cornerRadius(32).edgesIgnoringSafeArea(.bottom)
       }
     }
   }
@@ -72,6 +63,6 @@ struct AnswerView: View {
 
 struct AnswerView_Previews: PreviewProvider {
   static var previews: some View {
-    AnswerView(pageData: PageData(), food: foods[0])
+    AnswerView(pageData: PageData(), food: foods[6])
   }
 }
