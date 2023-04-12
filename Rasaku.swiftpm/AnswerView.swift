@@ -43,8 +43,13 @@ struct AnswerView: View {
                 }
               }
             }.padding(.horizontal, 10).padding(.top, 12)
+            HStack {
+              Spacer()
+              food.factImg.scaleEffect(1.2).padding(.top, -20).padding(.bottom, 20)
+              Spacer()
+            }.frame(width: .infinity)
             Spacer()
-          }.padding(40).frame(maxWidth: 640, minHeight: 500, maxHeight: 880).background(LinearGradient(colors: [food.colors[0], food.colors[1]], startPoint: .topLeading, endPoint: .bottomTrailing))
+          }.padding(40).frame(maxWidth: 640, minHeight: 500, maxHeight: .infinity).background(LinearGradient(colors: [food.colors[0], food.colors[1]], startPoint: .topLeading, endPoint: .bottomTrailing))
             .cornerRadius(32).foregroundColor(.white)
 
           NavigationLink(destination: ExploreView(pageData: pageData)) {
