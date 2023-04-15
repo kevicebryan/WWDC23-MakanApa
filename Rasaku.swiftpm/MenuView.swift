@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct MenuView: View {
+  init() {
+    getFont()
+  }
+
   @StateObject var pageData = PageData()
   @State var animationAmount = 0.8
 
@@ -17,10 +21,10 @@ struct MenuView: View {
         ZStack {
           Color("darkOrange").edgesIgnoringSafeArea(.all)
           Image("backgroundGerobak").edgesIgnoringSafeArea(.all).scaleEffect(1.1)
-
           VStack {
-            Text("MakanApa?").font(.system(size: 120)).fontWeight(.heavy)
-            Text("Let me recommend you what Indo Streetfood you should try! 🇮🇩").font(.title3).fontWeight(.semibold).padding(.top, -80)
+            Text("MakanApa?").font(.custom("Luminari", size: 136.0)).fontWeight(.heavy)
+//            Text("MakanApa?").font(.system(size: 132)).fontWeight(.heavy)
+            Text("Let me recommend you what Indo Streetfood you should try! 🇮🇩").font(.title3).fontWeight(.semibold).padding(.top, -112)
             NavigationLink(destination: PageView(pageData: pageData, currPage: pageData.pages[0])) {
               Image("tahu")
                 .padding(.top, -64).scaleEffect(animationAmount)
@@ -35,6 +39,12 @@ struct MenuView: View {
       }.navigationViewStyle(StackNavigationViewStyle()).accentColor(.white)
         .environmentObject(pageData)
     }
+  }
+
+  func getFont() {
+    let cfURL = Bundle.main.url(forResource: "Luminari-Regular", withExtension: "ttf")! as CFURL
+
+    CTFontManagerRegisterFontsForURL(cfURL, CTFontManagerScope.process, nil)
   }
 }
 

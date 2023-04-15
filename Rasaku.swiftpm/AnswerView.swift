@@ -45,7 +45,9 @@ struct AnswerView: View {
             }.padding(.horizontal, 10).padding(.top, 12)
             HStack {
               Spacer()
-              food.factImg.scaleEffect(1.2).padding(.top, -20).padding(.bottom, 20)
+              food.factImg.scaleEffect(1.2).padding(.top, -20).padding(.bottom, 20).onAppear {
+                AudioManager.instance.playSound()
+              }
               Spacer()
             }.frame(width: .infinity)
             Spacer()
