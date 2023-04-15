@@ -50,22 +50,22 @@ class PageData: ObservableObject {
          answers: [Answer(text: "Yes, I can handle the heat!", destination: 2, color: Color.green, icon: "checkmark.circle.fill"),
                    Answer(text: "No, I can't handle any spice.", destination: 3, color: Color.green, icon: "xmark.circle.fill")], emoji: "🌶️",
          isFood: false, foodId: nil),
-    Page(id: 2, question: "That's good, now I need to know do you prefer your food dry or wet like a soup/sauce?",
+    Page(id: 2, question: "That's good, now do you like your food dry or wet, like soup or sauce?",
          answers: [Answer(text: "Dry food", destination: 9, // Nasi Goreng
                           color: Color.green, icon: "checkmark.circle.fill"),
                    Answer(text: "I prefer something with sauce or a soup", destination: 10, // Rendang
                           color: Color.green, icon: "xmark.circle.fill")], emoji: "🍛",
          isFood: false, foodId: nil),
-    Page(id: 3, question: "That's completely fine, now I need to know if you prefer dry food or wet food like a soup/sauce?",
+    Page(id: 3, question: "That's completely fine, now do you like your food dry or wet, like soup or sauce?",
          answers: [Answer(text: "Dry food", destination: 5,
                           color: Color.green, icon: "checkmark.circle.fill"),
-                   Answer(text: "I prefer something with sauce or a soup", destination: 6,
+                   Answer(text: "I prefer a sauce or soup", destination: 6,
                           color: Color.green, icon: "xmark.circle.fill")], emoji: "🍛",
          isFood: false, foodId: nil),
     Page(id: 4, question: "Do you prefer something light to start the day 🌥️ or full to end the night? 🌌",
-         answers: [Answer(text: "Light", destination: 11, // Pisang goreng
+         answers: [Answer(text: "Light at daytime", destination: 11, // Pisang goreng
                           color: Color.green, icon: "checkmark.circle.fill"),
-                   Answer(text: "Full", destination: 12, // Martabak
+                   Answer(text: "Full for night time", destination: 12, // Martabak
                           color: Color.green, icon: "xmark.circle.fill")], emoji: "🫄",
          isFood: false, foodId: nil),
     Page(id: 5, question: "Now then, do you prefer roasted chared food🔥 or soul food?😌",
@@ -75,9 +75,9 @@ class PageData: ObservableObject {
                           color: Color.green, icon: "xmark.circle.fill")], emoji: "🍖",
          isFood: false, foodId: nil),
     Page(id: 6, question: "So are you a sauce type of person or a soup lover?",
-         answers: [Answer(text: "Saucy", destination: 7,
+         answers: [Answer(text: "I prefere saucy foods", destination: 7,
                           color: Color.green, icon: "checkmark.circle.fill"),
-                   Answer(text: "Soup", destination: 8,
+                   Answer(text: "Soup all day!", destination: 8,
                           color: Color.green, icon: "xmark.circle.fill")], emoji: "🥘",
          isFood: false, foodId: nil),
     Page(id: 7, question: "Which type of fresh do you prefer you, fresh salad🥒 or fresh seafood?🐟",
