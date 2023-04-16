@@ -17,7 +17,7 @@ struct QuestionView: View {
       Color("darkOrange").ignoresSafeArea()
       Image("egg").ignoresSafeArea().scaleEffect(1.05).padding(.top, 800)
       VStack(alignment: .center) {
-        Text(page.question ?? "").fontWeight(.medium).multilineTextAlignment(.center).frame(maxWidth: .infinity, maxHeight: 240).background(.white).font(.largeTitle).cornerRadius(32).padding(.top, 100).padding(.horizontal, 60)
+        Text(page.question ?? "").fontWeight(.medium).multilineTextAlignment(.center).frame(maxWidth: .infinity, maxHeight: 240).background(.white).font(.largeTitle).cornerRadius(32).padding(.top, 100).padding(.horizontal, 60).foregroundColor(.black)
 
         VStack {
           NavigationLink(destination: PageView(
